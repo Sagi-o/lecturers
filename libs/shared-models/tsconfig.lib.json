@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc",
+    "declaration": true,
+    "types": []
+  },
+  "include": ["**/*.ts", "../../apps/backend-nest/src/app/lecturers/lecturer.dto.ts", "../../apps/backend-nest/src/app/languages/language.dto.ts"],
+  "exclude": ["jest.config.ts", "**/*.spec.ts"]
+}

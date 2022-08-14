@@ -5,8 +5,8 @@
     "module": "commonjs",
     "types": ["node"],
     "emitDecoratorMetadata": true,
-    "target": "es2015"
+    "target": "es2015",
   },
   "exclude": ["jest.config.ts", "**/*.spec.ts", "**/*.test.ts"],
-  "include": ["**/*.ts"]
+  "include": ["**/*.ts", "../../libs/shared-models/src/lib/lecturer/lecturer.dto.ts", "../../libs/shared-models/src/lib/language/language.dto.ts"]
 }

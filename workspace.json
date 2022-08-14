@@ -3,6 +3,8 @@
   "version": 2,
   "projects": {
     "backend-nest": "apps/backend-nest",
-    "frontend-react": "apps/frontend-react"
+    "data-access": "libs/data-access",
+    "frontend-react": "apps/frontend-react",
+    "shared-models": "libs/shared-models"
   }
 }
