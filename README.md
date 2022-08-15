@@ -6,7 +6,7 @@ This project was generated using [Nx](https://nx.dev).
 
 ## How to run this application
 
-Run `nx serve backend-nest` for the backend NestJS server, will be served on `localhost:3333`.<br/>
+Run `nx serve backend-nest` for the backend NestJS server, will be served on `http://localhost:3333/`.<br/>
 
 Run `nx serve frontend-react` for the frontend React application. Navigate to `http://localhost:4200/`.
 
