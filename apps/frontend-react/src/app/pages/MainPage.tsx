@@ -57,6 +57,8 @@ export const MainPage: FunctionComponent = () => {
   const isSmallScreen = useMediaQuery('(max-width:600px)');
 
   useEffect(() => {
+    console.log('useEffect');
+
     getData(languagesIdsFilter);
   }, [languagesIdsFilter]);
 
@@ -82,7 +84,6 @@ export const MainPage: FunctionComponent = () => {
       await lecturersApiService.create(lecturer);
       setIsModalOpen(false);
       resetFilterState();
-      getData();
     } catch (error) {
       // Alert user with the appropriate error message from the backend
       console.log(error);
@@ -119,7 +120,6 @@ export const MainPage: FunctionComponent = () => {
     try {
       await lecturersApiService.delete(selectedRow.id);
       resetFilterState();
-      getData();
     } catch (error) {
       // Notify user with the server returned error
       console.error(error);
@@ -167,17 +167,15 @@ export const MainPage: FunctionComponent = () => {
           alignItems: 'center',
         }}
       >
-              <Button
-        sx={{ my: 2 }}
-        variant="outlined"
-        onClick={() => setIsModalOpen(true)}
-      >
-        Add New Lecturer
-      </Button>
+        <Button
+          sx={{ my: 2 }}
+          variant="outlined"
+          onClick={() => setIsModalOpen(true)}
+        >
+          Add New Lecturer
+        </Button>
 
-      <Box>
-        {lecturers.length} results
-      </Box>
+        <Box>{lecturers.length} results</Box>
       </Box>
 
       {/* Lecturers Table */}
