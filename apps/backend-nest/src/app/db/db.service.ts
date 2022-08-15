@@ -3,6 +3,7 @@ import { db } from './db.mock';
 import { RepoKeyType, RepoDataType } from './db.types';
 import { generateRandomID } from './db.utils';
 
+// Database service that mimics database repository
 @Injectable()
 export class DatabaseService {
     getAll(

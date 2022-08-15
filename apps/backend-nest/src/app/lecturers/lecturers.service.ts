@@ -22,6 +22,7 @@ export class LecturersService {
 
         const lecturers = this.dbService.getAll(REPO_KEY_TYPE, relationsArray);
 
+        // Filter by languageIds when provided
         if (languageIdsFilterArray) {
             return lecturers.filter((lecturer: Lecturer) => {
                 const { languages } = lecturer;
