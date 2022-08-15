@@ -17,8 +17,8 @@ export class LecturersController {
     constructor(private lecturersService: LecturersService) { }
 
     @Get()
-    getAll(@Query('relations') relations?: string) {
-        return this.lecturersService.getAll(relations);
+    getAll(@Query('relations') relations?: string, @Query('languageIds') languageIdsFilter?: string) {
+        return this.lecturersService.getAll(relations, languageIdsFilter);
     }
 
     @Get(':id')

@@ -5,7 +5,8 @@ export class LecturerDTO implements Lecturer {
     @IsString()
     name: string;
 
-    @IsEmail()
+    // SHould be: @IsEmail(), for simplicity on the frontend made it only IsString
+    @IsString()
     email: string;
 
     @IsArray()
