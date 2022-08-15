@@ -4,91 +4,30 @@
 
 This project was generated using [Nx](https://nx.dev).
 
-<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
+## How to run this application
 
-🔎 **Smart, Fast and Extensible Build System**
+Run `nx serve backend-nest` for the backend NestJS server, will be served on `http://localhost:3333/`.<br/>
 
-## Adding capabilities to your workspace
+Run `nx serve frontend-react` for the frontend React application. Navigate to `http://localhost:4200/`.
 
-Nx supports many plugins which add capabilities for developing different types of applications and different tools.
+## Filtering
+Filtering is done on the server, server can get `languageIds` query param like: `?languageIds=NodeJs,Angular` parse it, and return results to the frontend that consumes it.<br/>There is an advantage with server side filtering because:<br/>1. Not all data is found on the frontend application, especailly when working with large amounts of data<br/>2. It can be huge performance issue to make it on the frontend<br/>3. Filtering on the server makes sense becasue logic is on server and no matter which application asks to filter by `languageIds` - its exposed through the API
 
-These capabilities include generating applications, libraries, etc as well as the devtools to test, and build projects as well.
+## Dependncy Graph of the project
+![Screen Shot 2022-08-15 at 15 56 12](https://user-images.githubusercontent.com/44846094/184639258-6d843689-2f4c-41e2-a60c-82f2548febda.png)
 
-Below are our core plugins:
+`backend-nest` - NestJS Server<br/>
+`frontend-react` - React Frontend<br/>
+`data-access` - Library used as a fetch-layer, exposes API services for data access<br/>
+`shared-models` - Library that exposes shared models between the applications
 
-- [React](https://reactjs.org)
-  - `npm install --save-dev @nrwl/react`
-- Web (no framework frontends)
-  - `npm install --save-dev @nrwl/web`
-- [Angular](https://angular.io)
-  - `npm install --save-dev @nrwl/angular`
-- [Nest](https://nestjs.com)
-  - `npm install --save-dev @nrwl/nest`
-- [Express](https://expressjs.com)
-  - `npm install --save-dev @nrwl/express`
-- [Node](https://nodejs.org)
-  - `npm install --save-dev @nrwl/node`
+## Screenshots (app is responsive, and supports local CREATE/GET/DELETE operations)
 
-There are also many [community plugins](https://nx.dev/community) you could add.
+![Screen Shot 2022-08-15 at 16 03 55](https://user-images.githubusercontent.com/44846094/184640340-861a1af2-e859-4cd6-a11d-29a85cec2080.png)
 
-## Generate an application
+![Screen Shot 2022-08-15 at 16 04 12](https://user-images.githubusercontent.com/44846094/184640348-efe42772-4d0f-4d7e-b7b6-bc5a37e0a3d2.png)
 
-Run `nx g @nrwl/react:app my-app` to generate an application.
+![Screen Shot 2022-08-15 at 16 04 29](https://user-images.githubusercontent.com/44846094/184640362-8f0a462e-88a8-4355-b72f-500980ccb6f4.png)
 
-> You can use any of the plugins above to generate applications as well.
+![Screen Shot 2022-08-15 at 16 04 43](https://user-images.githubusercontent.com/44846094/184640372-3e8260a0-b534-4233-93a8-8fa8e7304428.png)
 
-When using Nx, you can create multiple applications and libraries in the same workspace.
-
-## Generate a library
-
-Run `nx g @nrwl/react:lib my-lib` to generate a library.
-
-> You can also use any of the plugins above to generate libraries as well.
-
-Libraries are shareable across libraries and applications. They can be imported from `@lecturers/mylib`.
-
-## Development server
-
-Run `nx serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `nx g @nrwl/react:component my-component --project=my-app` to generate a new component.
-
-## Build
-
-Run `nx build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `nx test my-app` to execute the unit tests via [Jest](https://jestjs.io).
-
-Run `nx affected:test` to execute the unit tests affected by a change.
-
-## Running end-to-end tests
-
-Run `nx e2e my-app` to execute the end-to-end tests via [Cypress](https://www.cypress.io).
-
-Run `nx affected:e2e` to execute the end-to-end tests affected by a change.
-
-## Understand your workspace
-
-Run `nx graph` to see a diagram of the dependencies of your projects.
-
-## Further help
-
-Visit the [Nx Documentation](https://nx.dev) to learn more.
-
-
-
-## ☁ Nx Cloud
-
-### Distributed Computation Caching & Distributed Task Execution
-
-<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-cloud-card.png"></p>
-
-Nx Cloud pairs with Nx in order to enable you to build and test code more rapidly, by up to 10 times. Even teams that are new to Nx can connect to Nx Cloud and start saving time instantly.
-
-Teams using Nx gain the advantage of building full-stack applications with their preferred framework alongside Nx’s advanced code generation and project dependency graph, plus a unified experience for both frontend and backend developers.
-
-Visit [Nx Cloud](https://nx.app/) to learn more.
