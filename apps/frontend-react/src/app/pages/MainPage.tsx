@@ -18,6 +18,8 @@ import {
   DialogContentText,
   DialogActions,
   useMediaQuery,
+  Backdrop,
+  CircularProgress,
 } from '@mui/material';
 import { CreateLecturer } from '../components/CreateLecturer';
 import { MultipleSelect } from '../components/MultipleSelect';
@@ -41,6 +43,8 @@ const tableHead: TableHeadConfig<Lecturer> = [
   },
 ];
 
+const API_RESPONSE_DELAY_MILLIS = 250;
+
 export const MainPage: FunctionComponent = () => {
   const [lecturers, setLecturers] = useState<Lecturer[]>([]);
   const [languages, setLanguages] = useState<Language[]>([]);
@@ -53,23 +57,41 @@ export const MainPage: FunctionComponent = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const isSmallScreen = useMediaQuery('(max-width:600px)');
 
   useEffect(() => {
-    console.log('useEffect');
-
-    getData(languagesIdsFilter);
+    fetchData(languagesIdsFilter);
   }, [languagesIdsFilter]);
 
-  const getData = (languageIdsFilter?: string[]) => {
+  const fetchData = (languageIdsFilter?: string[]) => {
+    setIsLoading(true);
+
     // Get filtered lecturers with the relation/join of "languages"
-    lecturersApiService
-      .getAll(['languages'], languageIdsFilter)
-      .then(setLecturers);
+    const getLecturers = lecturersApiService.getAll(
+      ['languages'],
+      languageIdsFilter
+    );
 
     // Get all languages
-    languagesApiService.getAll().then(setLanguages);
+    const getLanguages = languagesApiService.getAll();
+
+    Promise.all([getLecturers, getLanguages])
+      .then(([lecturers, languages]) => {
+        // Mimic API call response delay
+        setTimeout(() => {
+          setIsLoading(false);
+          setLecturers(lecturers);
+          setLanguages(languages);
+        }, API_RESPONSE_DELAY_MILLIS);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+
+        // Alert user with the appropriate error message from the backend
+        console.error(error);
+      });
   };
 
   const renderObjectsConfig = {
@@ -121,7 +143,7 @@ export const MainPage: FunctionComponent = () => {
       await lecturersApiService.delete(selectedRow.id);
       resetFilterState();
     } catch (error) {
-      // Notify user with the server returned error
+      // Alert user with the appropriate error message from the backend
       console.error(error);
     }
   };
@@ -217,6 +239,14 @@ export const MainPage: FunctionComponent = () => {
           <Button onClick={onLecturerDelete}>Delete</Button>
         </DialogActions>
       </Dialog>
+
+      {/* Loading Spinner */}
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={isLoading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </Container>
   );
 };
