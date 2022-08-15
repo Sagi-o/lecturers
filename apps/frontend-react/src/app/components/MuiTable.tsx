@@ -10,13 +10,14 @@ import {
 import React, { PropsWithChildren } from 'react';
 
 export type TableHeadConfig<T> = { key: keyof T; label: string }[];
+export type TableRenderObjectsConfig<T> = {
+  [Property in keyof T]?: (obj: any) => React.ReactNode;
+};
 
 interface TableProps<T> {
   tableHead: TableHeadConfig<T>;
   tableRows: T[];
-  renderObjectsConfig?: {
-    [Property in keyof T]?: (obj: any) => React.ReactNode;
-  };
+  renderObjectsConfig?: TableRenderObjectsConfig<T>;
   onRowClick?: (row: T) => void;
 }
 
@@ -26,8 +27,7 @@ export const MuiTable = <T extends BaseEntity>({
   renderObjectsConfig,
   onRowClick,
 }: PropsWithChildren<TableProps<T>>) => {
-
-  const renderRow = (key: keyof T, row: T) => {
+  const renderRowCell = (key: keyof T, row: T) => {
     if (renderObjectsConfig?.[key]) {
       return renderObjectsConfig[key]?.(row[key]);
     }
@@ -45,9 +45,16 @@ export const MuiTable = <T extends BaseEntity>({
   );
 
   const bodyContent = tableRows.map((row) => (
-    <TableRow key={row.id} onClick={() => onRowClick?.(row)} hover={true}>
+    <TableRow
+      hover
+      key={row.id}
+      onClick={() => onRowClick?.(row)}
+      sx={{ cursor: 'pointer' }}
+    >
       {tableHead.map((head) => (
-        <TableCell key={String(head.key)}>{renderRow(head.key, row)}</TableCell>
+        <TableCell key={String(head.key)}>
+          {renderRowCell(head.key, row)}
+        </TableCell>
       ))}
     </TableRow>
   ));

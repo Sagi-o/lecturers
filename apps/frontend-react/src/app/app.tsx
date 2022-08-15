@@ -1,6 +1,6 @@
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { MainPageComponent } from './pages/MainPage';
+import { MainPage } from './pages/MainPage';
 
 const darkTheme = createTheme({
   palette: {
@@ -12,7 +12,7 @@ export function App() {
   return (
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
-        <MainPageComponent />
+        <MainPage />
       </ThemeProvider>
   );
 }

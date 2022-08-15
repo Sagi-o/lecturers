@@ -3,7 +3,7 @@ import { Grid } from '@mui/material';
 import { FunctionComponent, useState } from 'react';
 import { Typography, TextField, Button } from '@mui/material';
 
-const style = {
+const containerStyle = {
   position: 'absolute',
   top: '50%',
   left: '50%',
@@ -35,7 +35,7 @@ export const CreateLecturer: FunctionComponent<CreateLecturerProps> = ({
   };
 
   return (
-    <Grid container spacing={2} sx={style}>
+    <Grid container spacing={2} sx={containerStyle}>
       <Grid item xs={12}>
         <Typography variant="h4" sx={{ mb: 2 }}>
           New Lecturer

@@ -17,7 +17,7 @@ const MenuProps = {
   },
 };
 
-const getStyles = (name: string, personName: string[], theme: Theme) => {
+const getMenuItemStyle = (name: string, personName: string[], theme: Theme) => {
   return {
     fontWeight:
       personName.indexOf(name) === -1
@@ -83,7 +83,7 @@ export const MultipleSelect: FunctionComponent<MutipleSelectProps> = ({
             <MenuItem
               key={value}
               value={value}
-              style={getStyles(value, selection, theme)}
+              style={getMenuItemStyle(value, selection, theme)}
             >
               {value}
             </MenuItem>

@@ -41,7 +41,7 @@ const tableHead: TableHeadConfig<Lecturer> = [
   },
 ];
 
-export const MainPageComponent: FunctionComponent = () => {
+export const MainPage: FunctionComponent = () => {
   const [lecturers, setLecturers] = useState<Lecturer[]>([]);
   const [languages, setLanguages] = useState<Language[]>([]);
   const [selectedRow, setSelectedRow] = useState<Lecturer>();
@@ -111,15 +111,19 @@ export const MainPageComponent: FunctionComponent = () => {
     setSelectedRow(row);
   };
 
-  const onLecturerDelete = () => {
+  const onLecturerDelete = async () => {
     setIsAlertOpen(false);
 
     if (!selectedRow?.id) return;
 
-    lecturersApiService.delete(selectedRow.id).then(() => {
+    try {
+      await lecturersApiService.delete(selectedRow.id);
       resetFilterState();
       getData();
-    });
+    } catch (error) {
+      // Notify user with the server returned error
+      console.error(error);
+    }
   };
 
   const resetFilterState = () => {
@@ -155,13 +159,26 @@ export const MainPageComponent: FunctionComponent = () => {
         </Box>
       </Paper>
 
-      <Button
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+              <Button
         sx={{ my: 2 }}
         variant="outlined"
         onClick={() => setIsModalOpen(true)}
       >
         Add New Lecturer
       </Button>
+
+      <Box>
+        {lecturers.length} results
+      </Box>
+      </Box>
 
       {/* Lecturers Table */}
       <Paper>
