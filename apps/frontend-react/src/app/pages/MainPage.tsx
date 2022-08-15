@@ -19,7 +19,7 @@ import {
   DialogActions,
   useMediaQuery,
 } from '@mui/material';
-import CreateLecturer from '../components/CreateLecturer';
+import { CreateLecturer } from '../components/CreateLecturer';
 import { MultipleSelect } from '../components/MultipleSelect';
 
 const tableHead: TableHeadConfig<Lecturer> = [
@@ -60,6 +60,7 @@ export const MainPageComponent: FunctionComponent = () => {
     lecturersApiService
       .getAll(['languages'], languageIdsFilter)
       .then(setLecturers);
+      
     languagesApiService.getAll().then(setLanguages);
   };
 
@@ -118,7 +119,7 @@ export const MainPageComponent: FunctionComponent = () => {
   const resetFilterState = () => {
     setLanguagesIdsFilter([]);
     setLanguagesSelection([]);
-  }
+  };
 
   return (
     <Container>

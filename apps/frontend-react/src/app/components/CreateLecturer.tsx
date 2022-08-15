@@ -25,7 +25,7 @@ interface CreateLecturerProps {
   onCreate: (lecturer: Lecturer) => void | Promise<void>;
 }
 
-const CreateLecturer: FunctionComponent<CreateLecturerProps> = ({
+export const CreateLecturer: FunctionComponent<CreateLecturerProps> = ({
   onCreate,
 }) => {
   const [lecturer, setLecturer] = useState<Lecturer>(DEFAULT_VALUE);
@@ -80,5 +80,3 @@ const CreateLecturer: FunctionComponent<CreateLecturerProps> = ({
     </Grid>
   );
 };
-
-export default CreateLecturer;

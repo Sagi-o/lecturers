@@ -15,7 +15,7 @@ export const languagesApiService = {
         return data;
     },
     delete: async (id: string) => {
-        const { data } = await api.post<Language[]>(`/languages/${id}`);
+        const { data } = await api.delete<Language[]>(`/languages/${id}`);
         return data;
     },
 }
