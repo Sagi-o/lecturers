@@ -44,9 +44,13 @@ const tableHead: TableHeadConfig<Lecturer> = [
 export const MainPageComponent: FunctionComponent = () => {
   const [lecturers, setLecturers] = useState<Lecturer[]>([]);
   const [languages, setLanguages] = useState<Language[]>([]);
+  const [selectedRow, setSelectedRow] = useState<Lecturer>();
+
+  // Used for server-side filtering, languageIds will be sent to the server with the format:
+  // "languageIds=NodeJS,Angular", the server will return filtered results
   const [languagesIdsFilter, setLanguagesIdsFilter] = useState<string[]>([]);
   const [languagesSelection, setLanguagesSelection] = useState<string[]>([]);
-  const [selectedRow, setSelectedRow] = useState<Lecturer>();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
 
@@ -57,10 +61,12 @@ export const MainPageComponent: FunctionComponent = () => {
   }, [languagesIdsFilter]);
 
   const getData = (languageIdsFilter?: string[]) => {
+    // Get filtered lecturers with the relation/join of "languages"
     lecturersApiService
       .getAll(['languages'], languageIdsFilter)
       .then(setLecturers);
-      
+
+    // Get all languages
     languagesApiService.getAll().then(setLanguages);
   };
 
