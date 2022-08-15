@@ -155,7 +155,7 @@ export const MainPage: FunctionComponent = () => {
 
   return (
     <Container>
-      <Typography variant={isSmallScreen ? 'h4' : 'h3'} sx={{ m: 2, mt: 4 }}>
+      <Typography variant={isSmallScreen ? 'h4' : 'h3'} sx={{ mb: 2, mt: 4, ml: 0 }}>
         Lecturers
       </Typography>
 
