@@ -6,9 +6,12 @@ This project was generated using [Nx](https://nx.dev).
 
 ## How to run this application
 
-Run `nx serve backend-nest` for the backend NestJS server, will served on `localhost:3333`.<br/>
+Run `nx serve backend-nest` for the backend NestJS server, will be served on `localhost:3333`.<br/>
 
-Run `nx serve frontend-react` for the frontend React application. Navigate to `http://localhost:4200/`
+Run `nx serve frontend-react` for the frontend React application. Navigate to `http://localhost:4200/`.
+
+## Filtering
+Filtering is done on the server, server can get `languageIds` query param like: `?languageIds=NodeJs,Angular` parse it, and return results to the frontend that consumes it.<br/>There is an advantage with server side filtering because:<br/>1. Not all data is found on the frontend application, especailly when working with large amounts of data<br/>2. It can be huge performance issue to make it on the frontend<br/>3. Filtering on the server makes sense becasue logic is on server and no matter which application asks to filter by `languageIds` - its exposed through the API
 
 ## Dependncy Graph of the project
 ![Screen Shot 2022-08-15 at 15 56 12](https://user-images.githubusercontent.com/44846094/184639258-6d843689-2f4c-41e2-a60c-82f2548febda.png)
