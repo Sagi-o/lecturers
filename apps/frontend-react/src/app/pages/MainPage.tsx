@@ -94,13 +94,6 @@ export const MainPage: FunctionComponent = () => {
       });
   };
 
-  const renderObjectsConfig = {
-    languages: (languages: Language[]) => {
-      const array = languages.map((lang) => lang.name);
-      return <span>{array.toString()}</span>;
-    },
-  };
-
   const onLecturerCreate = async (lecturer: Lecturer) => {
     try {
       await lecturersApiService.create(lecturer);
@@ -109,6 +102,20 @@ export const MainPage: FunctionComponent = () => {
     } catch (error) {
       // Alert user with the appropriate error message from the backend
       console.log(error);
+    }
+  };
+
+  const onLecturerDelete = async () => {
+    setIsAlertOpen(false);
+
+    if (!selectedRow?.id) return;
+
+    try {
+      await lecturersApiService.delete(selectedRow.id);
+      resetFilterState();
+    } catch (error) {
+      // Alert user with the appropriate error message from the backend
+      console.error(error);
     }
   };
 
@@ -134,28 +141,24 @@ export const MainPage: FunctionComponent = () => {
     setSelectedRow(row);
   };
 
-  const onLecturerDelete = async () => {
-    setIsAlertOpen(false);
-
-    if (!selectedRow?.id) return;
-
-    try {
-      await lecturersApiService.delete(selectedRow.id);
-      resetFilterState();
-    } catch (error) {
-      // Alert user with the appropriate error message from the backend
-      console.error(error);
-    }
-  };
-
   const resetFilterState = () => {
     setLanguagesIdsFilter([]);
     setLanguagesSelection([]);
   };
 
+  const renderObjectsConfig = {
+    languages: (languages: Language[]) => {
+      const languageNames = languages.map(({ name }) => name);
+      return <span>{languageNames.toString()}</span>;
+    },
+  };
+
   return (
     <Container>
-      <Typography variant={isSmallScreen ? 'h4' : 'h3'} sx={{ mb: 2, mt: 4, ml: 0 }}>
+      <Typography
+        variant={isSmallScreen ? 'h4' : 'h3'}
+        sx={{ mb: 2, mt: 4, ml: 0 }}
+      >
         Lecturers
       </Typography>
 
@@ -177,7 +180,7 @@ export const MainPage: FunctionComponent = () => {
             values={languages.map((lang) => lang.name)}
             onChange={onSelectionChange}
           />
-          <Button onClick={onSelectionClear}>Clear Filter</Button>
+          <Button disabled={!languagesSelection?.length} onClick={onSelectionClear}>Clear Filter</Button>
         </Box>
       </Paper>
 
