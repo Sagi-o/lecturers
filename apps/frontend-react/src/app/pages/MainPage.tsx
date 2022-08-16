@@ -20,6 +20,7 @@ import {
   useMediaQuery,
   Backdrop,
   CircularProgress,
+  Snackbar,
 } from '@mui/material';
 import { CreateLecturer } from '../components/CreateLecturer';
 import { MultipleSelect } from '../components/MultipleSelect';
@@ -45,6 +46,12 @@ const tableHead: TableHeadConfig<Lecturer> = [
 
 const API_RESPONSE_DELAY_MILLIS = 250;
 
+const SNACKBAR_TEXT = {
+  CREATE_LECTURER_SUCCESS: 'Lecturer created successfully',
+  DELETE_LECTURER_SUCCESS: 'Lecturer deleted successfully',
+  CLEAR_FILTER_SUCCESS: 'Filter cleared',
+};
+
 export const MainPage: FunctionComponent = () => {
   const [lecturers, setLecturers] = useState<Lecturer[]>([]);
   const [languages, setLanguages] = useState<Language[]>([]);
@@ -58,6 +65,7 @@ export const MainPage: FunctionComponent = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [snackbarText, setSnackbarText] = useState('');
 
   const isSmallScreen = useMediaQuery('(max-width:600px)');
 
@@ -99,6 +107,7 @@ export const MainPage: FunctionComponent = () => {
       await lecturersApiService.create(lecturer);
       setIsModalOpen(false);
       resetFilterState();
+      setSnackbarText(SNACKBAR_TEXT.CREATE_LECTURER_SUCCESS);
     } catch (error) {
       // Alert user with the appropriate error message from the backend
       console.log(error);
@@ -113,6 +122,7 @@ export const MainPage: FunctionComponent = () => {
     try {
       await lecturersApiService.delete(selectedRow.id);
       resetFilterState();
+      setSnackbarText(SNACKBAR_TEXT.DELETE_LECTURER_SUCCESS);
     } catch (error) {
       // Alert user with the appropriate error message from the backend
       console.error(error);
@@ -134,11 +144,16 @@ export const MainPage: FunctionComponent = () => {
 
   const onSelectionClear = () => {
     resetFilterState();
+    setSnackbarText(SNACKBAR_TEXT.CLEAR_FILTER_SUCCESS);
   };
 
   const onRowClick = (row: Lecturer) => {
     setIsAlertOpen(true);
     setSelectedRow(row);
+  };
+
+  const onSnackbarClose = () => {
+    setSnackbarText('');
   };
 
   const resetFilterState = () => {
@@ -180,7 +195,12 @@ export const MainPage: FunctionComponent = () => {
             values={languages.map((lang) => lang.name)}
             onChange={onSelectionChange}
           />
-          <Button disabled={!languagesSelection?.length} onClick={onSelectionClear}>Clear Filter</Button>
+          <Button
+            disabled={!languagesSelection?.length}
+            onClick={onSelectionClear}
+          >
+            Clear Filter
+          </Button>
         </Box>
       </Paper>
 
@@ -242,6 +262,14 @@ export const MainPage: FunctionComponent = () => {
           <Button onClick={onLecturerDelete}>Delete</Button>
         </DialogActions>
       </Dialog>
+
+      {/* Snackbar */}
+      <Snackbar
+        open={!!snackbarText}
+        autoHideDuration={5000}
+        onClose={onSnackbarClose}
+        message={snackbarText}
+      />
 
       {/* Loading Spinner */}
       <Backdrop
